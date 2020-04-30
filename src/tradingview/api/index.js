@@ -104,7 +104,7 @@ export default {
 		// Global variable
 		window.interval = setInterval(function () {
 			getLastKline(symbolInfo.ticker, resolution).then(kline => onRealtimeCallback(kline))
-		}, 5000)
+		}, 1000 * 30) // 30s update interval
 
 	},
 	unsubscribeBars: (subscriberUID) => {
