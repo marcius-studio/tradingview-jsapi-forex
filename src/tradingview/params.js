@@ -9,7 +9,7 @@ export default {
             this.symbol = params.symbol
             this.interval = params.interval
         } else if (!params.symbol || !params.interval) {
-            console.error('[parse URL] error. URL schema (http://<HOST>/?symbol=EUR/USD&interval=30)', params)
+            console.error('[parse URL] Error URL schema (http://<HOST>/?symbol=EUR/USD&interval=30)', params)
         }
     },
     methods: {

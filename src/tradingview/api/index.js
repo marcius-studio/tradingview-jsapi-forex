@@ -53,21 +53,21 @@ export default {
 		const comps = symbolName.split(':')
 		symbolName = (comps.length > 1 ? comps[1] : symbolName).toUpperCase()
 
-		const symbolInfo = (data) => ({
-			name: symbol.symbol,
-			description: symbol.baseAssetName + ' / ' + symbol.quoteAssetName,
-			ticker: data.symbol,
+		const symbolInfo = ({ symbol, name, pricescale, quoteAsset }) => ({
+			name: symbol,
+			description: name,
+			ticker: symbol,
 			exchange: 'Forex',
 			//listed_exchange: 'Binance',
 			//type: 'crypto',
 			session: '24x7',
 			minmov: 1,
-			pricescale: 100000, // https://github.com/tradingview/charting_library/wiki/Symbology#common-prices
+			pricescale: pricescale || 10000, // https://github.com/tradingview/charting_library/wiki/Symbology#common-prices
 			has_intraday: true,
 			has_daily: true,
 			has_weekly_and_monthly: true,
 			has_no_volume: true, // if no volume in response kline data, disable indicator
-			currency_code: data.quoteAsset,
+			currency_code: quoteAsset,
 			timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 		})
 
@@ -90,11 +90,9 @@ export default {
 			return onErrorCallback('[getBars] Invalid interval')
 		}
 
-		from *= 1000
-		to *= 1000
+		const klines = await getKlines(symbolInfo.ticker, interval, from, to);
+		(klines.length > 0) ? onHistoryCallback(klines) : onErrorCallback('Klines data error')
 
-		const klines = await getKlines(symbolInfo.ticker, interval, from, to)
-		return onHistoryCallback(klines)
 	},
 
 	// subscription to real-time updates
@@ -104,15 +102,13 @@ export default {
 		// Global variable
 		window.interval = setInterval(function () {
 			getLastKline(symbolInfo.ticker, resolution).then(kline => onRealtimeCallback(kline))
-		}, 1000 * 30) // 30s update interval
+		}, 1000 * 60) // 60s update interval
 
 	},
 	unsubscribeBars: (subscriberUID) => {
 		console.log('[unsubscribeBars]: Method call with subscriberUID:', subscriberUID)
 
-		clearInterval(interval)
+		clearInterval(window.interval)
 		console.log('[unsubscribeBars]: cleared')
-
-		console.log(interval)
 	},
 };

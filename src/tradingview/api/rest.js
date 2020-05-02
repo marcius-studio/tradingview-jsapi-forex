@@ -9,7 +9,7 @@ const url = 'https://fcsapi.com/api-v2/forex/'
 
 // Create `axios-cache-adapter` instance
 const cache = setupCache({
-    maxAge: 60 * 60 * 1000, // 60 min
+    maxAge: 10 * 60 * 1000, // 10 min
     exclude: { query: false }
 })
 
@@ -36,16 +36,20 @@ export const getSymbols = () => {
     return request(`list`, { type: 'forex', top_symbol: 1 })
 }
 
+// [{ "id": 1, "name": "Euro US Dollar", "symbol": "EUR/USD", "decimal": 4 }]
 export const getSymbol = (symbol) => {
-    return request(`profile`, { type: 'forex', symbol }).then(res => {
+    return request(`list`, { type: 'forex', top_symbol: 1 }).then(res => {
         const data = res.data.response
+
+        const responseSymbol = data.find(i => i.symbol == symbol)
+        const pair = symbol.split('/')
 
         return {
             symbol,
-            baseAsset: data[0].short_name,
-            quoteAsset: data[1].short_name,
-            baseAssetName: data[0].name,
-            quoteAssetName: data[1].name,
+            name: responseSymbol.name,
+            baseAssetName: pair[0],
+            quoteAssetName: pair[1],
+            pricescale: parseFloat('1' + Array(parseFloat(responseSymbol.decimal)).fill(0).join(''))
         }
 
     })
@@ -55,15 +59,11 @@ export const getKlines = (symbol, interval, from, to) => {
 
     const period = intervals[interval]
 
-    console.log(symbol, period)
-
-    // from = from
-    //  to = to
-
     return request(`history`, { symbol, period })
         .then(res => {
             const data = res.data.response
             const klines = data.map(i => formatingKline(i))
+            //return klines.map(i => ({ ...i, time: i.time * 1000 })) // need for TO , FROM params
             return klines
         })
 }
