@@ -3,10 +3,11 @@ const TradingView = require('../../public/charting_library/charting_library.min'
 import datafeed from './api'
 
 // mixins
-import params from './params'
+import params from './mixins/params'
+import overlay from './mixins/overlay'
 
 export default {
-    mixins: [params],
+    mixins: [params, overlay],
     template: '<div id="tv_chart_container"></div>',
     data: () => ({
         widget: null,
@@ -25,7 +26,7 @@ export default {
             datafeed,
             library_path: "/charting_library/",
             locale: "en",
-            disabled_features: ["study_templates"],
+            disabled_features: ["study_templates", 'header_saveload'],
             enabled_features: [],
             charts_storage_url: 'http://saveload.tradingview.com',
             charts_storage_api_version: "1.1",
@@ -34,7 +35,7 @@ export default {
             timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
         }
 
-        this.widget = new TradingView.widget(options)
+        this.widget = new TradingView.widget(options) // Create TV chart
 
         this.widget.onChartReady(() => {
             this.onChartReady = true
