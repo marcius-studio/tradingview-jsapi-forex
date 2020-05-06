@@ -17,7 +17,6 @@ export default {
                 }
             })
 
-
             if (this.admin) {
                 // Save study
                 this.widget.headerReady().then(() => {
