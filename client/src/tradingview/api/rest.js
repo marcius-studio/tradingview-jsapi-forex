@@ -59,18 +59,18 @@ export const getKlines = (symbol, interval, from, to) => {
 
     const period = intervals[interval]
 
-    return request(`history`, { symbol, period })
+    return request(`history`, { symbol, period, from, to })
         .then(res => {
             const data = res.data.response
             const klines = data.map(i => formatingKline(i))
-            //return klines.map(i => ({ ...i, time: i.time * 1000 })) // need for TO , FROM params
+            return klines.map(i => ({ ...i, time: i.time * 1000 })) // need for TO , FROM params, can be remove * 1000 in v3 API 
             return klines
         })
 }
 
 export const getLastKline = (symbol, period) => {
     // Without cache because will return old data for last candle
-    return axios.get(url + `candle`, { params: { symbol, period, access_key: config.key, output: 'JSON', } })
+    return request(`candle`, { symbol, period } )
         .then(res => {
             const data = res.data.response[0]
             const klines = formatingKline(data)

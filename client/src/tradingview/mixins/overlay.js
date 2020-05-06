@@ -10,10 +10,13 @@ export default {
             // Load study
             this.getOverlay().then(res => {
                 if (res && typeof res.data == 'object') {
-                    console.log('[Study] load success', res)
-                    this.widget.activeChart().applyStudyTemplate(res.data || {})
+                    if (res.data.layout == 's') {
+                        this.widget.load(res.data)
+                        console.log('[chart`s overlay] loaded', res)
+                    }
                 }
             })
+
 
             if (this.admin) {
                 // Save study
@@ -26,8 +29,7 @@ export default {
                         body: 'TradingView template was saved successfuly',
                         callback: () => {
                             // eslint-disable-next-line no-console
-                            const template = this.widget.activeChart().createStudyTemplate({ saveInterval: true })
-                            this.setOverlay(template).then(res => console.log('[Study] save success', template))
+                            this.widget.save(cb => this.setOverlay(cb))
                         },
                     }))
                     button.innerHTML = 'Save chart'

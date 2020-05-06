@@ -10,5 +10,11 @@ module.exports = {
             template: 'public/index.html',
             filename: 'index.html',
         }
-    }
+    },
+    configureWebpack: {
+        output: {
+          filename: '[name].js',
+          chunkFilename: '[name].js'
+        }
+      }
 }
