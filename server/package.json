@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "scripts": {
+    "server": "nodemon ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "2.8.5",
+    "fastify": "2.14.0",
+    "nedb": "1.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.3"
+  }
+}

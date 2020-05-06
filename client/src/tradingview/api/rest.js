@@ -3,7 +3,7 @@
 import axios from 'axios'
 const { setupCache } = require('axios-cache-adapter')
 
-import config from '../../config'
+import config from '../../../../config'
 
 const url = 'https://fcsapi.com/api-v2/forex/'
 
@@ -92,7 +92,7 @@ const formatingKline = (i) => {
 }
 
 const request = (link, params) => {
-    return axiosWithCache({
+    return axios({
         url: url + link,
         method: 'GET',
         params: {

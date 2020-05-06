@@ -1,0 +1,21 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "scripts": {
+    "serve": "cross-env NODE_ENV=development vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "4.3.1",
+    "cross-env": "7.0.2",
+    "vue-template-compiler": "2.6.11"
+  },
+  "dependencies": {
+    "axios": "0.19.2",
+    "axios-cache-adapter": "2.5.0",
+    "cors": "2.8.5",
+    "vue": "2.6.11"
+  }
+}

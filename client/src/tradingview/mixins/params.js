@@ -7,7 +7,7 @@ export default {
     }),
     created() {
         const params = this.getUrlParams(window.location.search)
-        console.log(params)
+
         if (params.symbol && params.interval) {
             console.log('[parse URL] success', params)
             this.symbol = params.symbol

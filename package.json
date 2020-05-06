@@ -1,13 +1,9 @@
 {
   "name": "tradingview-jsapi-forex",
   "version": "1.0.0",
-  "description": "Sample implementation of TradingView Charting Library JS API for [ForexFeed.net](https://forexfeed.net/)",
-  "main": "src/main.js",
+  "description": "",
+  "main": "",
   "private": true,
-  "scripts": {
-    "serve": "cross-env NODE_ENV=development vue-cli-service serve",
-    "build": "vue-cli-service build"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nikitamarcius/tradingview-jsapi-forex.git"
@@ -17,15 +13,5 @@
   "bugs": {
     "url": "https://github.com/nikitamarcius/tradingview-jsapi-forex/issues"
   },
-  "homepage": "https://github.com/nikitamarcius/tradingview-jsapi-forex#readme",
-  "devDependencies": {
-    "@vue/cli-service": "4.3.1",
-    "cross-env": "7.0.2",
-    "vue-template-compiler": "2.6.11"
-  },
-  "dependencies": {
-    "axios": "0.19.2",
-    "axios-cache-adapter": "2.5.0",
-    "vue": "2.6.11"
-  }
+  "homepage": "https://github.com/nikitamarcius/tradingview-jsapi-forex#readme"
 }

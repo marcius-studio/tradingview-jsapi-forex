@@ -8,10 +8,10 @@ export default {
     watch: {
         onChartReady() {
             // Load study
-            this.getOverlay().then(template => {
-                if (template && Object.keys(template).length > 0) {
-                    console.log('[Study] load success', template)
-                    this.widget.activeChart().applyStudyTemplate(template)
+            this.getOverlay().then(res => {
+                if (res && typeof res.data == 'object') {
+                    console.log('[Study] load success', res)
+                    this.widget.activeChart().applyStudyTemplate(res.data || {})
                 }
             })
 
@@ -27,29 +27,40 @@ export default {
                         callback: () => {
                             // eslint-disable-next-line no-console
                             const template = this.widget.activeChart().createStudyTemplate({ saveInterval: true })
-                            this.setOverlay(template).then(() => console.log('[Study] save success', template))
+                            this.setOverlay(template).then(res => console.log('[Study] save success', template))
                         },
                     }))
-                    button.innerHTML = `Save ${this.symbol}`
+                    button.innerHTML = 'Save chart'
                 })
             }
+
         }
     },
     methods: {
         getOverlay() {
-            return this.request({ method: 'get', params: { symbol: this.symbol } })
+            return this.request({ method: 'get' })
         },
         setOverlay(content) {
-            return this.request({ method: 'put', params: { symbol: this.symbol, content } })
+            return this.request({ method: 'post', data: content })
         },
-        request({ method = 'get', params }) {
+        request({ method = 'get', data }) {
+            let params = {}
+
+            // endpoint
+            const url = process.env.NODE_ENV == 'development' ? 'http://localhost:3000/charts-storage/' : 'https://fxpricezone.com/charts-storage/'
+            // const url = 'https://fxpricezone.com/charts-storage/'
+
             // option help to test endpoint request
             if (process.env.NODE_ENV == 'development') params.user = 'test'
 
+            const symbol = this.widget.symbolInterval().symbol
+            params.symbol = symbol
+
             return axios({
-                url: 'https://fxpricezone.com/charts-storage/', // endpoint
+                url,
                 method,
                 params,
+                data
             })
                 .then(res => res)
                 .catch(error => console.error(error))

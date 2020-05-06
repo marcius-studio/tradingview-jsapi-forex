@@ -15,7 +15,7 @@ $ yarn
 
 ### config.js
 
-Data provider need **YOUR_KEY**, add in [config.js](/src/config.js)
+Data provider need **YOUR_KEY**, add in [config.js](/config.js)
 
 ```javascript
 {

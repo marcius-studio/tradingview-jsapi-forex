@@ -57,7 +57,7 @@ export default {
 			name: symbol,
 			description: name,
 			ticker: symbol,
-			exchange: 'Forex',
+			//exchange: 'Forex',
 			//listed_exchange: 'Binance',
 			//type: 'crypto',
 			session: '24x7',
