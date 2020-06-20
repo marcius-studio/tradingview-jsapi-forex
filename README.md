@@ -6,7 +6,7 @@ Repository features:
 
 * TradingView Charting Library
 * Updating data every minute (can be changed)
-* [Low-level save/load](https://github.com/tradingview/charting_library/wiki/Widget-Methods#savecallback) API with backend
+* [Low-level save/load](https://github.com/tradingview/charting_library/wiki/Saving-and-Loading-Charts) API with backend
 
 ## Installation
 
