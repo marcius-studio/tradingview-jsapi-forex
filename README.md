@@ -1,8 +1,12 @@
 # TradingView JS API Forex
 
-Sample implementation of TradingView Charting Library JS API for Forex.
+Ready-made solution TradingView Charting Library with Forex provider [Fcsapi.com](https://fcsapi.com/). 
 
-Datafeed provider [Fcsapi.com](https://fcsapi.com/)
+Repository features:
+
+* TradingView Charting Library
+* Updating data every minute (can be changed)
+* [Low-level save/load](https://github.com/tradingview/charting_library/wiki/Widget-Methods#savecallback) API with backend
 
 ## Installation
 
