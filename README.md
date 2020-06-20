@@ -4,14 +4,9 @@ Sample implementation of TradingView Charting Library JS API for Forex.
 
 Datafeed provider [Fcsapi.com](https://fcsapi.com/)
 
-## Init
+## Installation
 
-Need [Node.js LTS](https://nodejs.org/en/)
-
-```node
-$ npm i
-$ yarn 
-```
+Required [Node.js LTS](https://nodejs.org/en/)
 
 ### config.js
 
@@ -26,12 +21,26 @@ Data provider need **YOUR_KEY**, add in [config.js](/config.js)
 ### Commands
 
 ```node
-$ npm run serve // development http://localhost:8080
-$ npm run build // build
+$ cd client && yarn
+$ cd server && yarn
+```
+
+### Run
+
+```node
+$ cd client && yarn run serve
+$ cd server && yarn run start
+```
+
+### Build
+
+```node
+$ cd client && yarn run build
+$ cd server && yarn run build
 ```
 Build folder [dist](/dist). 
 
-**Note, need to put charting_library in the directory**
+**Note, need to put charting_library in the [public](client/public) folder**
 
 ### PHP ONLY
 
@@ -43,3 +52,19 @@ Header add Access-Control-Allow-Headers "origin, x-requested-with, content-type"
 Header add Access-Control-Allow-Methods "PUT, GET, POST, DELETE, OPTIONS"
 ```
 
+## Stay in touch
+
+Feel free to ask questions 😊
+
+* Discord: Nikita Marcius#2274
+* Telegram: [@nikitamarcius](https://ttttt.me/nikitamarcius)
+
+## Contributors
+
+<a href="https://github.com/marcius-studio">
+<img src="https://raw.githubusercontent.com/marcius-studio/storage/master/badge-marcius-studio.svg" height="60">
+</a>
+
+## Licence
+
+[Apache License Version 2.0](LICENSE.md)
