@@ -8,6 +8,11 @@ Repository features:
 * Updating data every minute (can be changed)
 * [Low-level save/load](https://github.com/tradingview/charting_library/wiki/Saving-and-Loading-Charts) API with backend
 
+## Articles
+
+* **[Connecting and settings TradingView with JS API and UDF adapter - Medium.com](https://medium.com/marcius-studio/connecting-and-settings-tradingview-with-js-api-and-udf-adapter-b790297a31fa)**
+* **[Financial charts for your application - Medium.com](https://medium.com/marcius-studio/financial-charts-for-your-application-cfcceb147786)**
+
 ## Installation
 
 Required [Node.js LTS](https://nodejs.org/en/)
