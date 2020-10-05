@@ -30,7 +30,7 @@ If you see 404 error page, then you need to request access to this repository at
 **Server-side**
 
 * [x] Fastifyjs
-* [x] fastify-http-proxy
+* [x] NeDB
 
 ## Installation 
 
