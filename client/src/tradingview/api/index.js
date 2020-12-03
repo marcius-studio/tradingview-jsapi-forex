@@ -1,4 +1,4 @@
-import { getSymbols, getSymbol, getKlines, getLastKline, checkInterval } from './rest'
+import { getSymbols, getSymbol, getKlines, getLastKline, checkInterval, intervals } from './rest'
 
 
 const _symbols = getSymbols() // Out from searchSymbols func, for economy month limit request
@@ -7,7 +7,7 @@ const configurationData = {
 	supports_marks: false,
 	supports_timescale_marks: false,
 	supports_time: true,
-	supported_resolutions: ['1', '5', '15', '30', '60', '300', '1D', '1W', '1M']
+	supported_resolutions: Object.keys(intervals)
 }
 
 // onReady => resolveSymbol => getBars => subscribeBars
@@ -66,7 +66,7 @@ export default {
 			has_intraday: true,
 			has_daily: true,
 			has_weekly_and_monthly: true,
-			has_no_volume: true, // if no volume in response kline data, disable indicator
+			has_no_volume: false, // if no volume in response kline data, disable indicator
 			currency_code: quoteAsset,
 			timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 		})
@@ -101,7 +101,10 @@ export default {
 
 		// Global variable
 		window.interval = setInterval(function () {
-			getLastKline(symbolInfo.ticker, resolution).then(kline => onRealtimeCallback(kline))
+			getLastKline(symbolInfo.ticker, resolution).then(kline => {
+				console.log(kline)
+				onRealtimeCallback(kline)
+			})
 		}, 1000 * 60) // 60s update interval
 
 	},

@@ -1,5 +1,3 @@
-const TradingView = require('../../public/charting_library/charting_library.min')
-
 import datafeed from './api'
 
 // mixins
@@ -24,7 +22,7 @@ export default {
             interval: this.interval,
             container_id: "tv_chart_container",
             datafeed,
-            library_path: "/charting_library/",
+            library_path: "/charting_library/charting_library/",
             locale: "en",
             disabled_features: ["study_templates", 'header_saveload'],
             enabled_features: [],
@@ -32,7 +30,8 @@ export default {
             charts_storage_api_version: "1.1",
             client_id: 'tradingview.com',
             user_id: 'public_user_id',
-            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            theme: 'light'
         }
 
         this.widget = new TradingView.widget(options) // Create TV chart

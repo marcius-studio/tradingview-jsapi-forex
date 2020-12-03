@@ -16,6 +16,7 @@
     "axios": "0.19.2",
     "axios-cache-adapter": "2.5.0",
     "cors": "2.8.5",
+    "timestring": "6.0.0",
     "vue": "2.6.11"
   }
 }

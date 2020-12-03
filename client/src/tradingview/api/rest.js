@@ -1,22 +1,18 @@
-// https://polygon.io/docs/#getting-started
+// https://fcsapi.com/document/forex-api
 
 import axios from 'axios'
-const { setupCache } = require('axios-cache-adapter')
+import timestring from 'timestring'
 
 import config from '../../../../config'
 
-const url = 'https://fcsapi.com/api-v2/forex/'
+const url = 'https://fcsapi.com/api-v3/forex/' // 'https://fcsapi.com/api-v2/forex/'
 
-// Create `axios-cache-adapter` instance
-const cache = setupCache({
-    maxAge: 10 * 60 * 1000, // 10 min
-    exclude: { query: false }
-})
-
-// Create `axios` instance passing the newly created `cache.adapter`
-const axiosWithCache = axios.create({
-    adapter: cache.adapter
-})
+let lastCandleTime = 0
+/*
+or to solve this issue, when you send second request
+set From={any old time, from time doesn't matter}
+set TO={first candle time from 1st request}
+*/
 
 export const intervals = {
     '1': '1m',
@@ -24,6 +20,8 @@ export const intervals = {
     '15': '15m',
     '30': '30m',
     '60': '1h',
+    '120': '2h',
+    '240': '4h',
     '300': '5h',
     '1D': '1d',
     '1W': '1w',
@@ -59,35 +57,45 @@ export const getKlines = (symbol, interval, from, to) => {
 
     const period = intervals[interval]
 
-    return request(`history`, { symbol, period, from, to })
+    // fixes: Data Provider response limited lenth of data "level=3" => 900 ticks
+    // need request manually, otherwise will gaps
+    to = (lastCandleTime > 0) ? lastCandleTime : to
+    from = to - (timestring(period) * 900)
+
+    return request(`history`, { symbol, period, from, to, level: 3 })
         .then(res => {
             const data = res.data.response
-            const klines = data.map(i => formatingKline(i))
-            return klines.map(i => ({ ...i, time: i.time * 1000 })) // need for TO , FROM params, can be remove * 1000 in v3 API 
-            return klines
+            const klines = Object.values(data).map(i => formatingKline(i))
+            lastCandleTime = klines.slice(0, 1)[0].time / 1000
+
+            return klines || []
         })
 }
 
-export const getLastKline = (symbol, period) => {
+export const getLastKline = (symbol, interval) => {
+    const period = intervals[interval]
+
     // Without cache because will return old data for last candle
-    return request(`candle`, { symbol, period } )
+    return request(`history`, { symbol, period, level: 1 })
         .then(res => {
-            const data = res.data.response[0]
-            const klines = formatingKline(data)
-            return klines
+            const candle = res.data.response.slice(-1)[0]
+            const kline = formatingKline(candle)
+            return kline
         })
 }
+
+// helpers
 
 export const checkInterval = (interval) => !!intervals[interval]
 
 const formatingKline = (i) => {
     return {
-        time: i.t,
+        time: i.t * 1000,
         open: i.o,
         high: i.h,
         low: i.l,
         close: i.c,
-        // volume: i.v
+        volume: i.v
     }
 }
 
