@@ -90,7 +90,7 @@ export default {
 			return onErrorCallback('[getBars] Invalid interval')
 		}
 
-		const klines = await getKlines(symbolInfo.ticker, interval, from, to);
+		const klines = await getKlines({symbol: symbolInfo.ticker, interval, from, to, firstDataRequest});
 		(klines.length > 0) ? onHistoryCallback(klines) : onErrorCallback('Klines data error')
 
 	},

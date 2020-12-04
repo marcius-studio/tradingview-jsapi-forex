@@ -52,15 +52,19 @@ export const getSymbol = (symbol) => {
 
     })
 }
-
-export const getKlines = (symbol, interval, from, to) => {
+// (symbol, interval, from, to)
+export const getKlines = ({ symbol, interval, firstDataRequest }) => {
 
     const period = intervals[interval]
 
     // fixes: Data Provider response limited lenth of data "level=3" => 900 ticks
     // need request manually, otherwise will gaps
-    to = (lastCandleTime > 0) ? lastCandleTime : to
-    from = to - (timestring(period) * 900)
+    if (firstDataRequest) lastCandleTime = 0
+
+    const to = (lastCandleTime == 0) ? Math.round(Date.now() / 1000) : lastCandleTime
+    const from = to - (timestring(period) * 900)
+
+    console.log(to, from, Date.now())
 
     return request(`history`, { symbol, period, from, to, level: 3 })
         .then(res => {
